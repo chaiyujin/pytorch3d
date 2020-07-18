@@ -16,7 +16,7 @@ from .cameras import (
     look_at_rotation,
     look_at_view_transform,
 )
-from .lighting import DirectionalLights, PointLights, diffuse, specular
+from .lighting import DirectionalLights, PointLights, diffuse, specular, SH9Lights
 from .materials import Materials
 from .mesh import (
     HardFlatShader,
