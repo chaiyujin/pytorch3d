@@ -1,3 +1,4 @@
+*.so
 build/
 dist/
 *.egg-info/
@@ -5,7 +6,6 @@ dist/
 *-checkpoint.ipynb
 **/.ipynb_checkpoints
 **/.ipynb_checkpoints/**
-
 
 # Docusaurus site
 website/yarn.lock
