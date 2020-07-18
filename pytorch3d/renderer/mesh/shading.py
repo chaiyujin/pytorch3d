@@ -33,16 +33,6 @@ def _apply_lighting(
     ambient_color = materials.ambient_color * lights.ambient_color
     diffuse_color = materials.diffuse_color * light_diffuse
     specular_color = materials.specular_color * light_specular
-
-    # print("normals: ", normals.shape)           # N_batch, A_img, A_img, N_face, 3
-    # print("points:  ", points.shape)            # N_batch, A_img, A_img, N_face, 3
-    # print("ambient: ", ambient_color.shape)     # N_batch, 3
-    # print("diffuse: ", diffuse_color.shape)     # N_batch, A_img, A_img, N_face, 3
-    # print("specular:", specular_color.shape)    # N_batch, A_img, A_img, N_face, 3
-    # print("materials.ambient_color: ", materials.ambient_color.shape,  materials.ambient_color)
-    # print("materials.diffuse_color: ", materials.diffuse_color.shape,  materials.diffuse_color)
-    # print("materials.specular_color:", materials.specular_color.shape, materials.specular_color)
-
     if normals.dim() == 2 and points.dim() == 2:
         # If given packed inputs remove batch dim in output.
         return (

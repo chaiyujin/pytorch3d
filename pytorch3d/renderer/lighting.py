@@ -278,42 +278,6 @@ class PointLights(TensorProperties):
         )
 
 
-class SH9Lights(TensorProperties):
-    def __init__(
-        self,
-        sh_coeffs=None,
-        ambient_color=((0, 0, 0),),
-        device: str = "cpu",
-    ):
-        import math
-
-        if sh_coeffs is None:
-            sh_coeffs = torch.zeros((1, 9, 3), dtype=torch.float32)
-            sh_coeffs[0, 0, :3] = 2.0 * math.sqrt(math.pi)
-            sh_coeffs = sh_coeffs.numpy()
-
-        super().__init__(
-            device=device,
-            sh_coeffs=sh_coeffs,
-            ambient_color=ambient_color
-        )
-        assert self.sh_coeffs.dim() == 3
-        assert self.sh_coeffs.size(1) == 9
-        assert self.sh_coeffs.size(2) == 3
-
-    def clone(self):
-        other = self.__class__(device=self.device)
-        return super().clone(other)
-
-    def diffuse(self, normals, points) -> torch.Tensor:
-        # TODO: use sh9 lighting
-        return torch.ones_like(points)
-
-    def specular(self, normals, points, camera_position, shininess) -> torch.Tensor:
-        # no specular
-        return torch.zeros_like(points)
-
-
 def _validate_light_properties(obj):
     props = ("ambient_color", "diffuse_color", "specular_color")
     for n in props:
