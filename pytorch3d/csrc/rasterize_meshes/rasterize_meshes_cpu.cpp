@@ -210,6 +210,11 @@ RasterizeMeshesNaiveCpu(
           const vec2<float> pxy(xf, yf);
           const vec3<float> bary0 =
               BarycentricCoordinatesForward(pxy, v0, v1, v2);
+
+          // float u = bary0.x * v0.x + bary0.y * v1.x + bary0.z * v2.x;
+          // float v = bary0.x * v0.y + bary0.y * v1.y + bary0.z * v2.y;
+          // printf("%.3f, %.3f, (%.3f, %.3f) %.3f\n", u, v, xf, yf, bary0.x + bary0.y + bary0.z);
+
           const vec3<float> bary = !perspective_correct
               ? bary0
               : BarycentricPerspectiveCorrectionForward(bary0, z0, z1, z2);

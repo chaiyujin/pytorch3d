@@ -5,7 +5,8 @@ from typing import NamedTuple, Optional
 import torch
 import torch.nn as nn
 
-from .rasterize_meshes import rasterize_meshes
+from .rasterize_meshes import rasterize_meshes, rasterize_meshes_python
+from .utils import interpolate_face_attributes
 
 
 # Class to store the outputs of mesh rasterization
@@ -132,6 +133,34 @@ class MeshRasterizer(nn.Module):
             clip_barycentric_coords=raster_settings.clip_barycentric_coords,
             cull_backfaces=raster_settings.cull_backfaces,
         )
+
+        # # try
+        # verts = meshes_screen.verts_packed()
+        # faces = meshes_screen.faces_packed()
+        # faces_verts = verts[faces]  # F, 3, 3
+
+        # # pixels = interpolate_face_attributes(pix_to_face, bary_coords, faces_verts)
+        # for y in range(512):
+        #     for x in range(512):
+        #         fi = pix_to_face[0, y, x, 0]
+        #         if fi < 0:
+        #             continue
+        #         w0 = bary_coords[0, y, x, 0, 0]
+        #         w1 = bary_coords[0, y, x, 0, 1]
+        #         w2 = bary_coords[0, y, x, 0, 2]
+        #         v0 = faces_verts[fi, 0]
+        #         v1 = faces_verts[fi, 1]
+        #         v2 = faces_verts[fi, 2]
+
+        #         uv = v0 * w0 + v1 * w1 + v2 * w2
+        #         u = (1.0 - uv[0].item()) / 2.0 * 512
+        #         v = (1.0 - uv[1].item()) / 2.0 * 512
+        #         print((u, v), (x, y))
+
+        #         # u = (1.0-pixels[0, y, x, 0, 0].item()) / 2.0 * 512
+        #         # v = (1.0-pixels[0, y, x, 0, 1].item()) / 2.0 * 512
+        #         # print((u, v), (x, y))
+
         return Fragments(
             pix_to_face=pix_to_face, zbuf=zbuf, bary_coords=bary_coords, dists=dists
         )
