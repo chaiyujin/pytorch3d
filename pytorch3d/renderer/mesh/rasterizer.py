@@ -134,6 +134,9 @@ class MeshRasterizer(nn.Module):
             cull_backfaces=raster_settings.cull_backfaces,
         )
 
+        # fix bary_coords
+        bary_coords = bary_coords / bary_coords.sum(-1, keepdim=True)
+
         # # try
         # verts = meshes_screen.verts_packed()
         # faces = meshes_screen.faces_packed()
