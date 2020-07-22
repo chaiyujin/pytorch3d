@@ -135,7 +135,7 @@ class MeshRasterizer(nn.Module):
         )
 
         # fix bary_coords
-        bary_coords = bary_coords / bary_coords.sum(-1, keepdim=True)
+        # bary_coords = bary_coords / bary_coords.sum(-1, keepdim=True)
 
         # # try
         # verts = meshes_screen.verts_packed()
