@@ -30,9 +30,9 @@ def _apply_lighting(
         camera_position=cameras.get_camera_center(),
         shininess=materials.shininess,
     )
-    ambient_color = materials.ambient_color * lights.ambient_color
-    diffuse_color = materials.diffuse_color * light_diffuse
-    specular_color = materials.specular_color * light_specular
+    ambient_color = materials.ambient_color.to(points.device) * lights.ambient_color.to(points.device)
+    diffuse_color = materials.diffuse_color.to(points.device) * light_diffuse
+    specular_color = materials.specular_color.to(points.device) * light_specular
     if normals.dim() == 2 and points.dim() == 2:
         # If given packed inputs remove batch dim in output.
         return (
